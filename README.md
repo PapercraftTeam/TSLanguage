@@ -11,7 +11,7 @@ All keywords are aviliable by typing "help" in the program.
 
 # Another Major Problem That Wont Fix
 
-We were planned to make it face-to-object at first, but because of tech. problems, we could only make it face-to-process. 
+We were planned to make it object-oriented at first, but because of tech. problems, we could only make it process-oriented.
 
 If anybody would like to fix that, we will be quite appericiate that.
 
