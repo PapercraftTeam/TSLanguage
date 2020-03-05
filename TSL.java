@@ -46,6 +46,10 @@ public class TSL {
 		System.out.println("rnd (int index) (int anwserindex) -- round a number");
 		System.out.println("rdm (long seed) (int max) -- generate an random number");
 		System.out.println("mvv (int var1) (int var2) -- copy a variable");
+		System.out.println("exec (index) -- run code in the index");
+		System.out.println("cler (index) -- clear index");
+		System.out.println("loop (4evr/int times) (codeindex) -- loop codes");
+		System.out.println("exit (value) -- exit with a value");
 	}
 
 	public static void init(){
@@ -55,7 +59,7 @@ public class TSL {
 	}
 
 	public static void create(int varindex, String data){
-		var.ensureCapacity(32767);
+		var.ensureCapacity(128);
 		var.add(varindex, data);
 		System.out.println("Data at index "+varindex + " : " + var.get(varindex));
 	}
@@ -110,8 +114,12 @@ public class TSL {
 		process1 = 0;
 	}
 
-	public static void _run(String filepath){
-
+	public static void strt(int cmdindex){
+		try{
+		exec(var.get(cmdindex));
+		}catch(IndexOutOfBoundsException e){
+			System.err.println("Error while trying to read index. Is it exists?");
+		}
 	}
 
 	public static void inpt(int questionindex, int varindex){
@@ -127,6 +135,30 @@ public class TSL {
 		}
 	}
 
+	public static void loop(String choice, int cmdindex){
+		try{
+			switch(choice){
+			case "4evr" :
+				while(true){
+					exec(var.get(cmdindex));
+				}
+			default :
+				for(int time = Integer.parseInt(choice) ;time>=1; time--){
+					exec(var.get(cmdindex));
+				}
+				break;
+			}
+		}catch(Exception e){
+			System.err.println("An error has happened, log is below");
+			e.printStackTrace();
+		}
+	}
+	
+	public static void exit(int level){
+		System.out.println("TSL exited.");
+		System.exit(level);
+	}
+	
 	public static void math(String switchs, int varindex, int destvarindex){
 		switch(switchs){
 		case "sqt":
@@ -212,6 +244,16 @@ public class TSL {
 	    sbu = null;
 	    chars = null;
 	}
+	
+	public static void cler(int index){
+		try{
+		var.remove(index);
+		}catch(Exception e){
+			System.out.println("An error happened during clearing, log is below");
+			e.printStackTrace();
+		}
+		System.out.println("Cleared index " + index);
+	}
 
 	public static void lnth(int index1, int index2){
 		var.add(index2, String.valueOf(var.get(index1).length()));
@@ -230,134 +272,164 @@ public class TSL {
 		System.err.println("BUT THERE IS ABSOLUTELY NO SURPRISE LOL");
 	}
 
+	public static void exec(String cmd){
+		String[] cmdArr = cmd.split("\\s+");
+		if(cmd.equalsIgnoreCase("init")){
+			init();
+			cmd = "";
+		}
+		else if(cmd.equalsIgnoreCase("help")){
+			help();
+			cmd = "";
+		}
+		else if(cmdArr[0].equalsIgnoreCase("crte")){
+			try{
+				String cuttedCommand = cmd.substring(7);
+				create(Integer.parseInt(cmdArr[1]), cuttedCommand);
+				cmd = "";
+			}catch(ArrayIndexOutOfBoundsException e){
+					System.err.println("Too less arguments.");
+			}
+		}
+		else if(cmdArr[0].equalsIgnoreCase("read")){
+			try{
+				read(Integer.parseInt(cmdArr[1]));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else if(cmdArr[0].equalsIgnoreCase("text")){
+			try{
+				text(cmd.substring(5));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}
+		else if(cmdArr[0].equalsIgnoreCase("side")){
+			try{
+				side(Integer.parseInt(cmdArr[1]));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}
+		else if(cmdArr[0].equalsIgnoreCase("wrte")){
+			try{
+				write(Integer.parseInt(cmdArr[1]), cmdArr[2]);
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else if(cmdArr[0].equalsIgnoreCase("time")){
+			try{
+				time(Integer.parseInt(cmdArr[1]));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else if(cmdArr[0].equalsIgnoreCase("plus")){
+			try{
+				plus(Integer.parseInt(cmdArr[1]), Integer.parseInt(cmdArr[2]));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else if(cmdArr[0].equalsIgnoreCase("mnus")){
+			try{
+				mnus(Integer.parseInt(cmdArr[1]), Integer.parseInt(cmdArr[2]));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else if(cmdArr[0].equalsIgnoreCase("mtpl")){
+			try{
+				mtpl(Integer.parseInt(cmdArr[1]), Integer.parseInt(cmdArr[2]));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else if(cmdArr[0].equalsIgnoreCase("dvid")){
+			try{
+				dvid(Integer.parseInt(cmdArr[1]), Integer.parseInt(cmdArr[2]));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else if(cmdArr[0].equalsIgnoreCase("caidan")){
+			try{
+				caidan();
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else if(cmdArr[0].equalsIgnoreCase("caidan1")){
+			try{
+				caidan1();
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else if(cmdArr[0].equalsIgnoreCase("asci")){
+			try{
+				asci(Integer.parseInt(cmdArr[1]), Integer.parseInt(cmdArr[2]));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else if(cmdArr[0].equalsIgnoreCase("icsa")){
+			try{
+				icsa(Integer.parseInt(cmdArr[1]), Integer.parseInt(cmdArr[2]));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else if(cmdArr[0].equalsIgnoreCase("inpt")){
+			try{
+				inpt(Integer.parseInt(cmdArr[1]), Integer.parseInt(cmdArr[2]));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else if(cmdArr[0].equalsIgnoreCase("math")){
+			try{
+				math(cmdArr[1], Integer.parseInt(cmdArr[2]), Integer.parseInt(cmdArr[3]));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else if(cmdArr[0].equalsIgnoreCase("lnth")){
+			try{
+				lnth(Integer.parseInt(cmdArr[1]), Integer.parseInt(cmdArr[2]));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}
+		else if(cmdArr[0].equalsIgnoreCase("cler")){
+			try{
+				cler(Integer.parseInt(cmdArr[1]));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else if(cmdArr[0].equalsIgnoreCase("exec")){
+			try{
+				exec(var.get(Integer.parseInt(cmdArr[1])));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else if(cmdArr[0].equalsIgnoreCase("loop")){
+			try{
+				loop(cmdArr[1], Integer.parseInt(cmdArr[2]));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else if(cmdArr[0].equalsIgnoreCase("exit")){
+			try{
+				exit(Integer.parseInt(cmdArr[1]));
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.err.println("Too less arguments.");
+			}
+		}else{
+		    	System.err.println("Command Not Exist!");
+		    }
+	}
+	
 	public static void main(String[] args) throws IOException{
 		init();
 		try{
 		while(true){
 			BufferedReader cmdbr = new BufferedReader(new InputStreamReader(System.in));
 			cmd = cmdbr.readLine();
-			String[] cmdArr = cmd.split("\\s+");
-			if(cmd.equalsIgnoreCase("init")){
-				init();
-				cmd = "";
+			exec(cmd);
+		    	}
+			}catch(Exception e){
+		    	System.err.println("An error has happened, log is below");
+		    	e.printStackTrace();
 			}
-			else if(cmd.equalsIgnoreCase("help")){
-				help();
-				cmd = "";
-			}
-			else if(cmdArr[0].equalsIgnoreCase("crte")){
-				try{
-					create(Integer.parseInt(cmdArr[1]), cmdArr[2]);
-					cmd = "";
-				}catch(ArrayIndexOutOfBoundsException e){
-						System.err.println("Too less arguments.");
-				}
-			}
-			else if(cmdArr[0].equalsIgnoreCase("read")){
-				try{
-					read(Integer.parseInt(cmdArr[1]));
-				}catch(ArrayIndexOutOfBoundsException e){
-					System.err.println("Too less arguments.");
-				}
-			}else if(cmdArr[0].equalsIgnoreCase("text")){
-				try{
-					text(cmdArr[1]);
-				}catch(ArrayIndexOutOfBoundsException e){
-					System.err.println("Too less arguments.");
-				}
-			}
-			else if(cmdArr[0].equalsIgnoreCase("side")){
-				try{
-					side(Integer.parseInt(cmdArr[1]));
-				}catch(ArrayIndexOutOfBoundsException e){
-					System.err.println("Too less arguments.");
-				}
-			}
-			else if(cmdArr[0].equalsIgnoreCase("wrte")){
-				try{
-					write(Integer.parseInt(cmdArr[1]), cmdArr[2]);
-				}catch(ArrayIndexOutOfBoundsException e){
-					System.err.println("Too less arguments.");
-				}
-			}else if(cmdArr[0].equalsIgnoreCase("time")){
-				try{
-					time(Integer.parseInt(cmdArr[1]));
-				}catch(ArrayIndexOutOfBoundsException e){
-					System.err.println("Too less arguments.");
-				}
-			}else if(cmdArr[0].equalsIgnoreCase("plus")){
-				try{
-					plus(Integer.parseInt(cmdArr[1]), Integer.parseInt(cmdArr[2]));
-				}catch(ArrayIndexOutOfBoundsException e){
-					System.err.println("Too less arguments.");
-				}
-			}else if(cmdArr[0].equalsIgnoreCase("mnus")){
-				try{
-					mnus(Integer.parseInt(cmdArr[1]), Integer.parseInt(cmdArr[2]));
-				}catch(ArrayIndexOutOfBoundsException e){
-					System.err.println("Too less arguments.");
-				}
-			}else if(cmdArr[0].equalsIgnoreCase("mtpl")){
-				try{
-					mtpl(Integer.parseInt(cmdArr[1]), Integer.parseInt(cmdArr[2]));
-				}catch(ArrayIndexOutOfBoundsException e){
-					System.err.println("Too less arguments.");
-				}
-			}else if(cmdArr[0].equalsIgnoreCase("dvid")){
-				try{
-					dvid(Integer.parseInt(cmdArr[1]), Integer.parseInt(cmdArr[2]));
-				}catch(ArrayIndexOutOfBoundsException e){
-					System.err.println("Too less arguments.");
-				}
-			}else if(cmdArr[0].equalsIgnoreCase("caidan")){
-				try{
-					caidan();
-				}catch(ArrayIndexOutOfBoundsException e){
-					System.err.println("Too less arguments.");
-				}
-			}else if(cmdArr[0].equalsIgnoreCase("caidan1")){
-				try{
-					caidan1();
-				}catch(ArrayIndexOutOfBoundsException e){
-					System.err.println("Too less arguments.");
-				}
-			}else if(cmdArr[0].equalsIgnoreCase("asci")){
-				try{
-					asci(Integer.parseInt(cmdArr[1]), Integer.parseInt(cmdArr[2]));
-				}catch(ArrayIndexOutOfBoundsException e){
-					System.err.println("Too less arguments.");
-				}
-			}else if(cmdArr[0].equalsIgnoreCase("icsa")){
-				try{
-					icsa(Integer.parseInt(cmdArr[1]), Integer.parseInt(cmdArr[2]));
-				}catch(ArrayIndexOutOfBoundsException e){
-					System.err.println("Too less arguments.");
-				}
-			}else if(cmdArr[0].equalsIgnoreCase("inpt")){
-				try{
-					inpt(Integer.parseInt(cmdArr[1]), Integer.parseInt(cmdArr[2]));
-				}catch(ArrayIndexOutOfBoundsException e){
-					System.err.println("Too less arguments.");
-				}
-			}else if(cmdArr[0].equalsIgnoreCase("math")){
-				try{
-					math(cmdArr[1], Integer.parseInt(cmdArr[2]), Integer.parseInt(cmdArr[3]));
-				}catch(ArrayIndexOutOfBoundsException e){
-					System.err.println("Too less arguments.");
-				}
-			}else if(cmdArr[0].equalsIgnoreCase("lnth")){
-				try{
-					lnth(Integer.parseInt(cmdArr[1]), Integer.parseInt(cmdArr[2]));
-				}catch(ArrayIndexOutOfBoundsException e){
-					System.err.println("Too less arguments.");
-				}
-			}else{
-			    	System.err.println("Command Not Exist!");
-			    }
-			}
-		}catch(Exception e){
-			System.err.println("An error has happened, log is below.");
-			e.printStackTrace();
 		}
-	}
 }
