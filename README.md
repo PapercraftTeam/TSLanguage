@@ -9,7 +9,7 @@ TSL is programmed using Java, Based on XTCPL(Author Not Release Yet).
 
 All keywords are aviliable by typing "help" in the program.
 
-# Another Major Problem That Wont Fix
+# Another Major Problem That Might Fix
 
 We were planned to make it object-oriented at first, but because of tech. problems, we could only make it process-oriented.
 
