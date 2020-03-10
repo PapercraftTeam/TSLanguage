@@ -9,6 +9,14 @@ TSL is programmed using Java, Based on XTCPL(Author Not Release Yet).
 
 All keywords are aviliable by typing "help" in the program.
 
+# TSL's other defination
+
+As genural we suggest you to call it "T Script Language", but if you like, see these names below.
+
+Toy Stupid Language(We don't perfer that!)
+
+or whatever you like.
+
 # Another Major Problem That Might Fix
 
 We were planned to make it object-oriented at first, but because of tech. problems, we could only make it process-oriented.
