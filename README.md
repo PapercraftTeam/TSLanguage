@@ -1,5 +1,5 @@
-# TSLanguage
-An newbie-friendly script language. (Developing)
+# TSLanguage (DO NOT STAR, NO MORE RELEASES)
+An newbie-friendly script language. (Deprecated)
 
 # How does it work?
 
